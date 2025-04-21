@@ -29,7 +29,7 @@ class Database extends Config
         'hostname'     => 'localhost',
         'username'     => 'phpmyadmin',
         'password'     => '1234',
-        'database'     => 'smartdb_brgy',
+        'database'     => 'newdb_brgy',
         'DBDriver'     => 'MySQLi',
         'DBPrefix'     => '',
         'pConnect'     => false,

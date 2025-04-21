@@ -7,121 +7,59 @@ use CodeIgniter\Controller;
 
 class Users extends Controller
 {
-    public function index()
-    {
+    public function index(){
         $model = new UserModel();
         $data['users'] = $model->findAll();
         return view('users/index', $data);
     }
 
-    public function create()
-    {
-        return view('users/create');
-    }
+    public function save(){
+        $name = $this->request->getPost('name');
+        $email = $this->request->getPost('email');
+        $password = $this->request->getPost('password');
+        $role = $this->request->getPost('role');
+        $status = $this->request->getPost('status');
+        $phone = $this->request->getPost('phone');
 
-    public function store()
-    {
-        $model = new UserModel();
+        if (!$email || !$password) {
+            return $this->response->setJSON(['status' => 'error', 'message' => 'Email and password are required']);
+        }
+
+        $userModel = new \App\Models\UserModel();
+
+        // Check if email already exists
+        $existingUser = $userModel->where('email', $email)->first();
+        if ($existingUser) {
+            return $this->response->setJSON(['status' => 'error', 'message' => 'Email is already in use']);
+        }
+
         $data = [
-            'username' => $this->request->getPost('username'),
-            'email'    => $this->request->getPost('email'),
+            'name'       => $name,
+            'email'      => $email,
+            'password'   => password_hash($password, PASSWORD_DEFAULT),
+            'role'       => $role,
+            'status'     => $status,
+            'phone'      => $phone,
+            'updated_at' => date('Y-m-d H:i:s'),
+            'deleted_at' => date('Y-m-d H:i:s')
         ];
-        $model->insert($data);
-        return redirect()->to('/users');
+
+        if ($userModel->insert($data)) {
+            return $this->response->setJSON(['status' => 'success']);
+        } else {
+            return $this->response->setJSON(['status' => 'error', 'message' => 'Failed to save user']);
+        }
     }
 
-   public function edit($id)
-{
-    $model = new UserModel();
-    $user = $model->find($id); // Fetch user by ID
-
-    if ($user) {
-        return $this->response->setJSON(['data' => $user]); // Return user data as JSON
-    } else {
-        return $this->response->setStatusCode(404)->setJSON(['error' => 'User not found']);
-    }
-}
-
-
-
- public function delete($id)
-{
-    $model = new UserModel();
-    
-    $user = $model->find($id);
-    if (!$user) {
-        return $this->response->setJSON(['success' => false, 'message' => 'User not found.']);
-    }
-
-    $deleted = $model->delete($id);
-
-    if ($deleted) {
-        return $this->response->setJSON(['success' => true, 'message' => 'User deleted successfully.']);
-    } else {
-        return $this->response->setJSON(['success' => false, 'message' => 'Failed to delete user.']);
-    }
-}
-
-
-
-public function fetchUsers()
-{
-    $model = new UserModel();
-    $users = $model->findAll();
-    $data = [];
-    $counter = 1;
-
-    foreach ($users as $user) {
-        $data[] = [
-            'row_number' => $counter++, // This will be used for display only
-            'id' => $user['id'],        // Keep the actual ID for operations
-            'email' => $user['email'],
-            'created_at' => $user['created_at'],
-        ];
-    }
-
-    return $this->response->setJSON(['data' => $data]);
-}
-
-
-
-public function save()
-{
-    $email = $this->request->getPost('email');
-    $password = $this->request->getPost('password');
-
-    if (!$email || !$password) {
-        return $this->response->setJSON(['status' => 'error', 'message' => 'Email and password are required']);
-    }
-
-    $userModel = new \App\Models\UserModel();
-
-    // Check if email already exists
-    $existingUser = $userModel->where('email', $email)->first();
-    if ($existingUser) {
-        return $this->response->setJSON(['status' => 'error', 'message' => 'Email is already in use']);
-    }
-
-    $data = [
-        'email' => $email,
-        'password' => password_hash($password, PASSWORD_DEFAULT),
-        'created_at' => date('Y-m-d H:i:s')
-    ];
-
-    if ($userModel->insert($data)) {
-        return $this->response->setJSON(['status' => 'success']);
-    } else {
-        return $this->response->setJSON(['status' => 'error', 'message' => 'Failed to save user']);
-    }
-}
-
-
-public function update()
-{
+    public function update(){
     $model = new UserModel();
     $userId = $this->request->getPost('id');
+    $name = $this->request->getPost('name');
     $email = $this->request->getPost('email');
     $password = $this->request->getPost('password');
+    $role = $this->request->getPost('role');
+    $status = $this->request->getPost('status');
+    $phone = $this->request->getPost('phone');
 
     // Validate the input
     if (empty($email)) {
@@ -141,7 +79,13 @@ public function update()
     }
 
     $userData = [
-        'email' => $email
+            'name'       => $name,
+            'email'      => $email,
+            'role'       => $role,
+            'status'     => $status,
+            'phone'      => $phone,
+            'updated_at' => date('Y-m-d H:i:s'),
+            'deleted_at' => date('Y-m-d H:i:s')
     ];
 
     if (!empty($password)) {
@@ -163,6 +107,54 @@ public function update()
     }
 }
 
+public function edit($id){
+    $model = new UserModel();
+    $user = $model->find($id); // Fetch user by ID
 
+    if ($user) {
+        return $this->response->setJSON(['data' => $user]); // Return user data as JSON
+    } else {
+        return $this->response->setStatusCode(404)->setJSON(['error' => 'User not found']);
+    }
+}
+
+ public function delete($id){
+    $model = new UserModel();
+    
+    $user = $model->find($id);
+    if (!$user) {
+        return $this->response->setJSON(['success' => false, 'message' => 'User not found.']);
+    }
+
+    $deleted = $model->delete($id);
+
+    if ($deleted) {
+        return $this->response->setJSON(['success' => true, 'message' => 'User deleted successfully.']);
+    } else {
+        return $this->response->setJSON(['success' => false, 'message' => 'Failed to delete user.']);
+    }
+}
+
+public function fetchUsers(){
+    $model = new UserModel();
+    $users = $model->findAll();
+    $data = [];
+    $counter = 1;
+
+    foreach ($users as $user) {
+        $data[] = [
+            'row_number' => $counter++, // This will be used for display only
+            'id' => $user['id'],        // Keep the actual ID for operations
+            'name' => $user['name'],
+            'email' => $user['email'],
+            'role' => $user['role'],
+            'status' => $user['status'],
+            'phone' => $user['phone'],
+            'created_at' => $user['created_at'],
+        ];
+    }
+
+    return $this->response->setJSON(['data' => $data]);
+}
 
 }
