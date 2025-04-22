@@ -44,11 +44,13 @@ Now open your browser and go to:
 http://localhost:8080
 
 💾 Database Setup
+
 Use the SQL file in the db file/ folder.
 
 Import it into your MySQL server using phpMyAdmin or the MySQL command line.
 
 📂 Project Structure
+
 ├── app/
 │   ├── Controllers/
 │   ├── Models/
