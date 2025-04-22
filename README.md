@@ -61,11 +61,11 @@ Import it into your MySQL server using phpMyAdmin or the MySQL command line.
 🔍 Why Use This CodeIgniter 4 CRUD Project?
 Learn how to build CRUD with CodeIgniter 4
 
-Great for beginners in PHP frameworks
+✅ Great for beginners in PHP frameworks
 
-Minimalistic and easy to modify
+✅ Minimalistic and easy to modify
 
-Ideal starting point for larger CodeIgniter 4 applications
+✅ Ideal starting point for larger CodeIgniter 4 applications
 
 💡 Author
 
@@ -77,4 +77,5 @@ This project is open-source and available under the MIT License.
 Login Credentials 
 
 User = glennazuelo1@gmail.com
+
 Pass = 1232
