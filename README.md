@@ -14,10 +14,15 @@ Architecture: MVC (Model-View-Controller)
 
 🎯 Key Features
 ✅ Easy setup and configuration
+
 ✅ Full CRUD functionality (Create, Read, Update, Delete)
+
 ✅ Bootstrap integration for responsive UI
+
 ✅ Built with modern PHP practices
+
 ✅ Simple and clean folder structure
+
 ✅ Ready-to-use CodeIgniter 4 project
 
 📥 Installation Guide
