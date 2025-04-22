@@ -34,3 +34,7 @@ Notes
 This repo is for learning purposes.
 
 Contributions welcome!
+
+login credentials 
+user = glennazuelo1@gmail.com
+pass = 1232
