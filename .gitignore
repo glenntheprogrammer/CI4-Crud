@@ -31,10 +31,10 @@ $RECYCLE.BIN/
 *~
 
 # KDE directory preferences
-.directory
+#.directory
 
 # Linux trash folder which might appear on any partition or disk
-.Trash-*
+#.Trash-*
 
 #-------------------------
 # Environment Files
@@ -42,28 +42,28 @@ $RECYCLE.BIN/
 # These should never be under version control,
 # as it poses a security risk.
 #.env
-.vagrant
-Vagrantfile
+#.vagrant
+#Vagrantfile
 
 #-------------------------
 # Temporary Files
 #-------------------------
-writable/cache/*
-!writable/cache/index.html
+#writable/cache/*
+#!writable/cache/index.html
 
-writable/logs/*
-!writable/logs/index.html
+#ritable/logs/*
+#!writable/logs/index.html
 
-writable/session/*
-!writable/session/index.html
+#writable/session/*
+#!writable/session/index.html
 
-writable/uploads/*
-!writable/uploads/index.html
+#writable/uploads/*
+#!writable/uploads/index.html
 
-writable/debugbar/*
-!writable/debugbar/.gitkeep
+#writable/debugbar/*
+#!writable/debugbar/.gitkeep
 
-php_errors.log
+#php_errors.log
 
 #-------------------------
 # User Guide Temp Files
@@ -91,24 +91,24 @@ tests/coverage*
 #-------------------------
 
 # Modules Testing
-_modules/*
+#_modules/*
 
 # phpenv local config
-.php-version
+#.php-version
 
 # Jetbrains editors (PHPStorm, etc)
-.idea/
-*.iml
+#.idea/
+# *.iml
 
 # Netbeans
-nbproject/
-build/
-nbbuild/
-dist/
-nbdist/
-nbactions.xml
-nb-configuration.xml
-.nb-gradle/
+#nbproject/
+#build/
+#nbbuild/
+#dist/
+#nbdist/
+#nbactions.xml
+#nb-configuration.xml
+#.nb-gradle/
 
 # Sublime Text
 *.tmlanguage.cache
@@ -116,11 +116,11 @@ nb-configuration.xml
 *.stTheme.cache
 *.sublime-workspace
 *.sublime-project
-.phpintel
-/api/
+#.phpintel
+#/api/
 
 # Visual Studio Code
 .vscode/
 
 /results/
-/phpunit*.xml
+#/phpunit*.xml
