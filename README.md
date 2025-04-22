@@ -27,20 +27,28 @@ Architecture: MVC (Model-View-Controller)
 ✅ Ready-to-use CodeIgniter 4 project
 
 📥 Installation Guide
+
 1. Clone the Repository
+   
 git clone https://github.com/glenntheprogrammer/CI4-Crud.git
+
 cd CI4-Crud
 
-3. Install Composer Dependencies
+2. Install Composer Dependencies
+   
 composer install
 
-4. Configure Environment
+3. Configure Environment
 cp env .env
+
 php spark key:generate
+
 Update .env with your MySQL database settings.
 
-5. Run the Project
+3. Run the Project
+   
 php spark serve
+
 Now open your browser and go to:
 http://localhost:8080
 
