@@ -1,7 +1,7 @@
 🚀 CodeIgniter 4 CRUD Application (CI4-CRUD)
 Welcome to the CI4 CRUD project — a simple, powerful, and beginner-friendly CRUD (Create, Read, Update, Delete) application built using the modern CodeIgniter 4 framework.
 
-This open-source CodeIgniter 4 CRUD example is perfect for developers who want to learn or build CRUD operations using MVC architecture in PHP.
+This open-source CodeIgniter 4 CRUD example is perfect for developers who want to learn or build CRUD operations using MVC architecture in PHP and AJAX.
 
 🧰 Tech Stack
 Backend: PHP 8.x with CodeIgniter 4
@@ -13,6 +13,7 @@ Database: MySQL
 Architecture: MVC (Model-View-Controller)
 
 🎯 Key Features
+
 ✅ Easy setup and configuration
 
 ✅ Full CRUD functionality (Create, Read, Update, Delete)
@@ -48,18 +49,6 @@ http://localhost:8080
 Use the SQL file in the db file/ folder.
 
 Import it into your MySQL server using phpMyAdmin or the MySQL command line.
-
-📂 Project Structure
-
-├── app/
-│   ├── Controllers/
-│   ├── Models/
-│   └── Views/
-├── public/
-├── writable/
-├── .env
-├── composer.json
-└── README.md
 
 🔍 Why Use This CodeIgniter 4 CRUD Project?
 Learn how to build CRUD with CodeIgniter 4
