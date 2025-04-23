@@ -48,20 +48,20 @@ $RECYCLE.BIN/
 #-------------------------
 # Temporary Files
 #-------------------------
-#writable/cache/*
-#!writable/cache/index.html
+writable/cache/*
+!writable/cache/index.html
 
-#ritable/logs/*
-#!writable/logs/index.html
+ritable/logs/*
+!writable/logs/index.html
 
-#writable/session/*
-#!writable/session/index.html
+writable/session/*
+!writable/session/index.html
 
-#writable/uploads/*
-#!writable/uploads/index.html
+writable/uploads/*
+!writable/uploads/index.html
 
-#writable/debugbar/*
-#!writable/debugbar/.gitkeep
+writable/debugbar/*
+!writable/debugbar/.gitkeep
 
 #php_errors.log
 
