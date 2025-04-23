@@ -1,5 +1,12 @@
 <?php
 
+/**
+* Description:  This Codeigniter Framework is created to build smart web applications
+* Author:       Glenn Azuelo
+* Date Created: April 14, 2025
+* Revised By:       
+*/
+
 namespace Config;
 
 use CodeIgniter\Database\Config;
