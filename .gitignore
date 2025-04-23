@@ -51,7 +51,7 @@ $RECYCLE.BIN/
 writable/cache/*
 !writable/cache/index.html
 
-ritable/logs/*
+writable/logs/*
 !writable/logs/index.html
 
 writable/session/*
