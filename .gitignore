@@ -63,7 +63,7 @@ writable/uploads/*
 writable/debugbar/*
 !writable/debugbar/.gitkeep
 
-#php_errors.log
+php_errors.log
 
 #-------------------------
 # User Guide Temp Files
