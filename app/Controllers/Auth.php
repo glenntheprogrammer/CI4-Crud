@@ -29,68 +29,71 @@ class Auth extends BaseController
         return view('login', ['lockout' => $lockout]);
     }
 
-    public function auth()
-    {
-        $session = session();
-        $model = new UserModel();
-        $db = \Config\Database::connect();
+   public function auth()
+{
+    $session = session();
+    $model = new UserModel();
+    $db = \Config\Database::connect();
 
-        $email = $this->request->getPost('email');
-        $password = $this->request->getPost('password');
-        $ip = $this->request->getIPAddress();
+    // Sanitize input
+    $email = filter_var($this->request->getPost('email'), FILTER_SANITIZE_EMAIL);
+    $password = trim($this->request->getPost('password'));
+    $ip = $this->request->getIPAddress();
+    $userAgent = $this->request->getUserAgent();
 
-        $maxAttempts = 5;
-        $lockoutTime = 3 * 60; // 1 minute lockout time (in seconds)
-        $timeWindow = date('Y-m-d H:i:s', strtotime('-15 minutes'));
+    $maxAttempts = 5;
+    $lockoutTime = 3 * 60; // 3 minute lockout time (in seconds)
+    $timeWindow = date('Y-m-d H:i:s', strtotime('-15 minutes'));
 
-        // Count recent failed attempts
-        $builder = $db->table('login_attempts');
-        $attempts = $builder
+    // Count recent failed attempts
+    $builder = $db->table('login_attempts');
+    $attempts = $builder
+        ->where('ip_address', $ip)
+        ->where('attempt_time >=', $timeWindow)
+        ->countAllResults();
+
+    if ($attempts >= $maxAttempts) {
+        $lastAttempt = $builder
+            ->selectMax('attempt_time')
             ->where('ip_address', $ip)
-            ->where('attempt_time >=', $timeWindow)
-            ->countAllResults();
+            ->get()
+            ->getRow();
 
-        if ($attempts >= $maxAttempts) {
-            $lastAttempt = $builder
-                ->selectMax('attempt_time')
-                ->where('ip_address', $ip)
-                ->get()
-                ->getRow();
+        $lastTime = strtotime($lastAttempt->attempt_time);
+        $lockoutExpiry = $lastTime + $lockoutTime;
+        $remaining = $lockoutExpiry - time();
 
-            $lastTime = strtotime($lastAttempt->attempt_time);
-            $lockoutExpiry = $lastTime + $lockoutTime;
-            $remaining = $lockoutExpiry - time();
-
-            if ($remaining > 0) {
-                session()->set('lockout_expiry', $lockoutExpiry);
-                return redirect()->to('/login');
-            }
-        }
-
-        $user = $model->where('email', $email)->first();
-
-        if ($user && password_verify($password, $user['password'])) {
-            // Success: clear only failed attempts for this IP
-            $builder->where('ip_address', $ip)->delete();
-
-            $session->regenerate();
-            $session->set([
-                'user_id' => $user['id'],
-                'email' => $user['email'],
-                'logged_in' => true
-            ]);
-            return redirect()->to('/dashboard');
-        } else {
-            // Log the failed attempt
-            $builder->insert([
-                'email' => $email,
-                'ip_address' => $ip,
-                'attempt_time' => date('Y-m-d H:i:s')
-            ]);
-
-            return redirect()->to('/login')->with('error', 'Invalid email or password');
+        if ($remaining > 0) {
+            session()->set('lockout_expiry', $lockoutExpiry);
+            return redirect()->to('/login');
         }
     }
+
+    $user = $model->where('email', $email)->first();
+
+    if ($user && password_verify($password, $user['password'])) {
+        // Success: clear only failed attempts for this IP
+        $builder->where('ip_address', $ip)->delete();
+
+        $session->regenerate();
+        $session->set([
+            'user_id' => $user['id'],
+            'email' => $user['email'],
+            'logged_in' => true
+        ]);
+        return redirect()->to('/dashboard');
+    } else {
+        // Log the failed attempt
+        $builder->insert([
+            'email' => $email,
+            'ip_address' => $ip,
+            'user_agent' => $userAgent,
+            'attempt_time' => date('Y-m-d H:i:s')
+        ]);
+
+        return redirect()->to('/login')->with('error', 'Invalid email or password');
+    }
+ }
 
     public function logout()
     {
