@@ -133,89 +133,42 @@ $(document).on('click', '.deleteUserBtn', function () {
     }
 });
 
-
 $(document).ready(function () {
-    $.ajax({
-        url: baseUrl + 'users/fetchUsers',
-        method: "GET",
-        dataType: "json",
-        success: function (response) {
-            if (!response.data || response.data.length === 0) {
-                $('#example1').DataTable({
-                    language: {
-                        emptyTable: "No users found."
-                    }
-                });
-                return;
+    const $table = $('#example1');
+
+    $table.DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: baseUrl + 'users/fetchUsers',
+            type: 'POST',
+        },
+        columns: [
+            { data: 'row_number' },
+            { data: 'id', visible: false },
+            { data: 'name' },
+            { data: 'email' },
+            { data: 'role' },
+            { data: 'status' },
+            { data: 'phone' },
+            { data: 'created_at' },
+            {
+                data: null,
+                orderable: false,
+                searchable: false,
+                render: function (data, type, row) {
+                    return `
+                        <button class="btn btn-sm btn-warning edit-btn" data-id="${row.id}">
+                            <i class="far fa-edit"></i>
+                        </button>
+                        <button class="btn btn-sm btn-danger deleteUserBtn" data-id="${row.id}">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    `;
+                }
             }
-
-            const keys = Object.keys(response.data[0]);
-
-                           const columns = [
-                    {
-                        data: 'row_number',
-                        title: 'No.'
-                    },
-                    {
-                        data: 'id',
-                        visible: false // 👈 hide the ID from the table
-                    },
-                    {
-                        data: 'name',
-                        title: 'Name'
-                    },
-                    {
-                        data: 'email',
-                        title: 'Email'
-                    },
-                    {
-                        data: 'role',
-                        title: 'Role'
-                    },
-                    {
-                        data: 'status',
-                        title: 'Status'
-                    },
-                    {
-                        data: 'phone',
-                        title: 'Phone'
-                    },
-                    {
-                        data: 'created_at',
-                        title: 'Created At'
-                    },
-                    {
-                        data: null,
-                        title: 'Actions',
-                        orderable: false,
-                        searchable: false,
-                        render: function (data, type, row) {
-                            return `
-                                <button class="btn btn-sm btn-warning edit-btn" data-id="${row.id}">
-                                    <i class="far fa-edit fa fw"></i>
-                                </button>
-                                <button class="btn btn-sm btn-danger deleteUserBtn" data-id="${row.id}">
-                                    <i class="fas fa-trash-alt"></i>
-                                </button>
-                            `;
-                        }
-                    }
-                ];
-
-
-            if ($.fn.DataTable.isDataTable('#example1')) {
-                $('#example1').DataTable().clear().destroy();
-            }
-
-            $('#example1').DataTable({
-                data: response.data,
-                columns: columns,
-                pageLength: 10,
-                responsive: true,
-                destroy: true,
-                autoWidth: false
-            });
-
-        }
+        ],
+        responsive: true,
+        autoWidth: false
     });
 });

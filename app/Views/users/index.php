@@ -32,7 +32,19 @@
               </div>
             </div>
             <div class="card-body">
-              <table id="example1" class="table table-bordered table-striped table-sm">
+               <table id="example1" class="table table-bordered table-striped table-sm">
+                <thead>
+                  <tr>
+                    <th>No.</th>
+                    <th style="display:none;">id</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Status</th>
+                    <th>Phone</th>
+                    <th>Created At</th>
+                  </tr>
+                </thead>
                 <tbody>
                 </tbody>
               </table>

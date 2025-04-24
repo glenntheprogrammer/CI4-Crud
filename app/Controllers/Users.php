@@ -135,26 +135,31 @@ public function edit($id){
     }
 }
 
-public function fetchUsers(){
-    $model = new UserModel();
-    $users = $model->findAll();
-    $data = [];
-    $counter = 1;
+public function fetchUsers()
+{
+    $request = service('request');
+    $model = new \App\Models\UserModel();
 
-    foreach ($users as $user) {
-        $data[] = [
-            'row_number' => $counter++, // This will be used for display only
-            'id' => $user['id'],        // Keep the actual ID for operations
-            'name' => $user['name'],
-            'email' => $user['email'],
-            'role' => $user['role'],
-            'status' => $user['status'],
-            'phone' => $user['phone'],
-            'created_at' => $user['created_at'],
-        ];
+    $start = $request->getPost('start') ?? 0;
+    $length = $request->getPost('length') ?? 10;
+    $searchValue = $request->getPost('search')['value'] ?? '';
+
+    $totalRecords = $model->countAll();
+    $result = $model->getUsers($start, $length, $searchValue);
+
+    $data = [];
+    $counter = $start + 1;
+    foreach ($result['data'] as $row) {
+        $row['row_number'] = $counter++;
+        $data[] = $row;
     }
 
-    return $this->response->setJSON(['data' => $data]);
+    return $this->response->setJSON([
+        'draw' => intval($request->getPost('draw')),
+        'recordsTotal' => $totalRecords,
+        'recordsFiltered' => $result['filtered'],
+        'data' => $data,
+    ]);
 }
 
 }
