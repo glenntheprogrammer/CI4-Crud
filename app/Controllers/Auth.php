@@ -79,7 +79,8 @@ class Auth extends BaseController
         $session->set([
             'user_id' => $user['id'],
             'email' => $user['email'],
-            'logged_in' => true
+            'logged_in' => true,
+            'last_activity' => time()
         ]);
         return redirect()->to('/dashboard');
     } else {
