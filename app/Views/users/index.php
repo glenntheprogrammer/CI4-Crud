@@ -58,6 +58,7 @@
     <div class="modal fade" id="AddNewModal" tabindex="-1" role="dialog" aria-labelledby="AddNewModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <form id="addUserForm">
+          <?= csrf_field() ?>
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title"><i class="fa fa-plus-circle fa fw"></i>  Add New</h5>
@@ -127,6 +128,7 @@
           </button>
         </div>
         <form id="editUserForm">
+           <?= csrf_field() ?>
           <div class="modal-body">
 
             <input type="hidden" id="userId" name="id">
