@@ -135,7 +135,7 @@ public function edit($id){
     }
 }
 
-public function fetchUsers()
+public function fetchRecords()
 {
     $request = service('request');
     $model = new \App\Models\UserModel();
@@ -145,7 +145,7 @@ public function fetchUsers()
     $searchValue = $request->getPost('search')['value'] ?? '';
 
     $totalRecords = $model->countAll();
-    $result = $model->getUsers($start, $length, $searchValue);
+    $result = $model->getRecords($start, $length, $searchValue);
 
     $data = [];
     $counter = $start + 1;

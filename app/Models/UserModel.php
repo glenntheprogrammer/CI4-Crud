@@ -11,7 +11,7 @@ class UserModel extends Model
 
     protected $allowedFields = ['uuid','email', 'password','role','status','name','phone', 'created_at', 'updated_at', 'deleted_at'];
 
-    public function getUsers($start, $length, $searchValue = '')
+    public function getRecords($start, $length, $searchValue = '')
     {
         $builder = $this->builder();
         $builder->select('*');

@@ -43,6 +43,7 @@
                     <th>Status</th>
                     <th>Phone</th>
                     <th>Created At</th>
+                    <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
