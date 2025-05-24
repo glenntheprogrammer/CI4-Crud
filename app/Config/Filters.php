@@ -35,6 +35,8 @@ class Filters extends BaseFilters
         'pagecache'     => PageCache::class,
         'performance'   => PerformanceMetrics::class,
         'inactivity' => \App\Filters\InactivityFilter::class,
+        'rolefilter' => \App\Filters\RoleFilter::class,
+        'csp' => \App\Filters\CspFilter::class,
     ];
 
     /**
@@ -72,10 +74,11 @@ class Filters extends BaseFilters
         'before' => [
             'inactivity' => ['except' => ['login', 'login/*', 'auth/*']], // adjust paths as needed
             'honeypot',
-            // 'csrf',
+            'csrf',
             'invalidchars',
         ],
         'after' => [
+            'csp',
             'honeypot',
             'secureheaders',
         ],

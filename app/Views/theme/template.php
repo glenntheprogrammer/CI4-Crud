@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta name="csrf-name" content="<?= csrf_token() ?>">
+  <meta name="csrf-token" content="<?= csrf_hash() ?>">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>BMIS | Dashboard</title>
